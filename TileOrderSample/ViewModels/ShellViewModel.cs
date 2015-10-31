@@ -11,7 +11,7 @@
 
         #region Fields
 
-        private ITileService _tileService;
+        private readonly ITileService _tileService;
         private ITile _selectedTile;
         private BindableCollection<ITile> _tiles;
         private bool _isOrdered;
@@ -75,7 +75,7 @@
             CheckIfTilesAreOrdered();
         }
 
-        public void PressCommand(ITile tile)
+        public void SelectCommand(ITile tile)
         {
             if (_selectedTile == null)
                 _selectedTile = tile;

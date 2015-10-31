@@ -12,7 +12,7 @@ namespace TileOrderSample.Services
 
         #region Fields
 
-        private static Random rng = new Random();
+        private static readonly Random _rng = new Random();
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace TileOrderSample.Services
             while (n > 1)
             {
                 n--;
-                int k = rng.Next(n + 1);
+                int k = _rng.Next(n + 1);
                 ITile value = tiles[k];
                 tiles[k] = tiles[n];
                 tiles[n] = value;

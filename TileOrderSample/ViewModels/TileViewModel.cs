@@ -29,7 +29,6 @@ namespace TileOrderSample.ViewModels
         public int Number
         {
             get;
-            private set;
         }
 
         public bool IsChecked

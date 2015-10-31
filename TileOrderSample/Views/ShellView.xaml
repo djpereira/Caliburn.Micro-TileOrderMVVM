@@ -40,7 +40,7 @@
                             </Style.Triggers>
                         </Style>
                     </DataTemplate.Resources>
-                    <ToggleButton cal:Message.Attach="PressCommand($dataContext)" IsChecked="{Binding Path=IsChecked}">
+                    <ToggleButton cal:Message.Attach="SelectCommand($dataContext)" IsChecked="{Binding Path=IsChecked}">
                         <Viewbox>
                             <TextBlock Text="{Binding Path=Number}" />
                         </Viewbox>
