@@ -1,0 +1,57 @@
+﻿<Window x:Class="TileOrderSample.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" MinWidth="600" MinHeight="600"  Width="600" Height="600"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:cal="http://www.caliburnproject.org" Title="Tile Order"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions">
+
+    <!-- Here we use an interaction trigger (Blend SDK), specifically a KeyTrigger (Blend SDK) to call an action in the viewmodel through ActionMessage (Caliburn.Micro) -->
+    <i:Interaction.Triggers>
+        <ei:KeyTrigger Key="F5">
+            <cal:ActionMessage MethodName="ResetCommand" />
+        </ei:KeyTrigger>
+    </i:Interaction.Triggers>
+
+    <DockPanel Margin="5">
+        <DockPanel DockPanel.Dock="Bottom" >
+            
+            <!-- Here we call an action in the viewmodel through ActionMessage (Caliburn.Micro) using shorthand syntax-->
+            <Button Content="Reset (F5)" Width="60" cal:Message.Attach="ResetCommand" DockPanel.Dock="Right" Margin="5" VerticalAlignment="Stretch" />
+            
+            <TextBlock TextWrapping="Wrap" Text="Click on the tile that you would like to move to select it, and then click on the tile in the position where you want to move it to exchange them and reorder." />
+        </DockPanel>
+        <ItemsControl ItemsSource="{Binding Path=Tiles}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <DataTemplate.Resources>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Blue"/>
+                            <Setter Property="Margin" Value="5"/>
+                            <Setter Property="Width" Value="180"/>
+                            <Setter Property="Height" Value="160"/>
+                            <Setter Property="Padding" Value="5" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.IsOrdered}" Value="True">
+                                    <Setter Property="Background" Value="Green"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataTemplate.Resources>
+                    <ToggleButton cal:Message.Attach="PressCommand($dataContext)" IsChecked="{Binding Path=IsChecked}">
+                        <Viewbox>
+                            <TextBlock Text="{Binding Path=Number}" />
+                        </Viewbox>
+                    </ToggleButton>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </DockPanel>
+</Window>
