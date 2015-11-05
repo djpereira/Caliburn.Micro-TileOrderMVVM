@@ -1,5 +1,6 @@
 ﻿namespace TileOrderSample.ViewModels
 {
+    using System.Linq;
     using Caliburn.Micro;
     using System.ComponentModel.Composition;
     using Services;
@@ -39,7 +40,7 @@
             {
                 if (_tiles == null)
                 {
-                    _tiles = new BindableCollection<ITile>(TileViewModel.GetTileCollection());
+                    _tiles = new BindableCollection<ITile>(_tileService.GetTileCollection().Select(t => new TileViewModel(t)));
                     _tileService.Reset(_tiles);
                     CheckIfTilesAreOrdered();
                 }
@@ -55,6 +56,8 @@
             }
             set
             {
+                if (_isOrdered == value)
+                    return;
                 _isOrdered = value;
                 NotifyOfPropertyChange(() => IsOrdered);
             }

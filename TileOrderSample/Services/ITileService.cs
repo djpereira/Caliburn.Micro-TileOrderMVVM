@@ -12,5 +12,7 @@ namespace TileOrderSample.Services
 
         void Swap(IList<ITile> tiles, ITile first, ITile second);
 
+        IEnumerable<ITile> GetTileCollection(int max = 9);
+
     }
 }

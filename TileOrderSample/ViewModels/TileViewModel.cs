@@ -1,6 +1,5 @@
-﻿using Caliburn.Micro;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using Caliburn.Micro;
 using TileOrderSample.Model;
 
 namespace TileOrderSample.ViewModels
@@ -11,46 +10,38 @@ namespace TileOrderSample.ViewModels
 
         #region Fields
 
-        private bool _isChecked;
+        private readonly ITile _tile;
 
         #endregion
 
         #region Constructor
 
-        public TileViewModel(int number)
+        public TileViewModel(ITile tile)
         {
-            Number = number;
+            if (tile == null)
+                throw new ArgumentNullException(nameof(tile));
+            _tile = tile;
         }
 
         #endregion
 
         #region Properties
 
-        public int Number
-        {
-            get;
-        }
+        public int Number => _tile.Number;
 
         public bool IsChecked
         {
             get
             {
-                return _isChecked;
+                return _tile.IsChecked;
             }
             set
             {
-                _isChecked = value;
+                if (_tile.IsChecked == value)
+                    return;
+                _tile.IsChecked = value;
                 NotifyOfPropertyChange(() => IsChecked);
             }
-        }
-
-        #endregion
-
-        #region Methods
-
-        public static IEnumerable<TileViewModel> GetTileCollection(int max = 9)
-        {
-            return Enumerable.Range(1, max).Select(i => new TileViewModel(i));
         }
 
         #endregion

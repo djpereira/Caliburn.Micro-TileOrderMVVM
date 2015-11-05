@@ -12,11 +12,17 @@ namespace TileOrderSample.Services
 
         #region Fields
 
-        private static readonly Random _rng = new Random();
+        private readonly Random _rng = new Random();
 
         #endregion
 
         #region Methods
+
+        public IEnumerable<ITile> GetTileCollection(int max = 9)
+        {
+            return Enumerable.Range(1, max).Select(i => new Tile(i));
+        }
+
 
         public bool IsOrdered(IList<ITile> tiles)
         {

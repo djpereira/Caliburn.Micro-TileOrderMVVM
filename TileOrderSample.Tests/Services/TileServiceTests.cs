@@ -74,7 +74,7 @@ namespace TileOrderSample.Tests.Services
                 new Model.Fakes.StubITile { NumberGet =() => 6 },
                 tile7,
                 new Model.Fakes.StubITile { NumberGet =() => 8 },
-                new Model.Fakes.StubITile { NumberGet =() =>9 },
+                new Model.Fakes.StubITile { NumberGet =() => 9 },
             };
             int tile3Pos = tiles.IndexOf(tile3);
             int tile7Pos = tiles.IndexOf(tile7);
