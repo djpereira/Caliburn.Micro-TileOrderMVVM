@@ -67,6 +67,9 @@
 
         #region Methods
 
+        /// <summary>
+        /// Reshuffles all the tiles in a random order
+        /// </summary>
         public void ResetCommand()
         {
             if (_selectedTile != null)
@@ -78,6 +81,9 @@
             CheckIfTilesAreOrdered();
         }
 
+        /// <summary>
+        /// Select a tile
+        /// </summary>
         public void SelectCommand(ITile tile)
         {
             if (_selectedTile == null)
@@ -92,6 +98,9 @@
             }
         }
 
+        /// <summary>
+        /// Sets the IsOrdered property based on the order of the tiles
+        /// </summary>
         private void CheckIfTilesAreOrdered()
         {
             IsOrdered = _tileService.IsOrdered(Tiles);

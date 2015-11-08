@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.ComponentModel.Composition;
     using System.ComponentModel.Composition.Hosting;
-    using System.ComponentModel.Composition.Primitives;
     using System.Linq;
     using Caliburn.Micro;
     using ViewModels;
@@ -14,18 +13,22 @@
         CompositionContainer _container;
 
         /// <summary>
-        /// By default, we are configured to use MEF
+        /// Sets up the IoC container and performs any other framework configuration
         /// </summary>
         protected override void Configure()
         {
-            var catalog = new AggregateCatalog(AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>());
+
+            // Catalog to be populated with assemblies that will be used by Caliburn.Micro to look for views
+            var catalog = new AggregateCatalog(AssemblySource.Instance.Select(x => new AssemblyCatalog(x)));
 
             _container = new CompositionContainer(catalog);
 
             var batch = new CompositionBatch();
 
+            // Add specific services
             batch.AddExportedValue<IWindowManager>(new WindowManager());
             batch.AddExportedValue<IEventAggregator>(new EventAggregator());
+
             batch.AddExportedValue(_container);
             batch.AddExportedValue(catalog);
 
@@ -40,7 +43,7 @@
             var enumerable = exports as object[] ?? exports.ToArray();
             if (enumerable.Any()) return enumerable.First();
 
-            throw new Exception(string.Format("Could not locate any instances of contract {0}.", contract));
+            throw new Exception($"Could not locate any instances of contract {contract}.");
         }
 
         protected override IEnumerable<object> GetAllInstances(Type serviceType)
